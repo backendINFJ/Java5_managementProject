@@ -3,7 +3,8 @@
 public class Main {
     public static void main(String[] args) {
 
-        System.out.printf("Hello and welcome!");
+        System.out.println("정근 브런치");
+        System.out.println("1번주자");
 
     }
 }
