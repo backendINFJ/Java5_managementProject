@@ -50,7 +50,7 @@ public class CampManagementApplication {
     private static void setInitData() {
         studentStore = new ArrayList<>();
         subjectStore = List.of(
-                ),
+
                 new Subject(
                         sequence(INDEX_TYPE_SUBJECT),
                         "객체지향",
