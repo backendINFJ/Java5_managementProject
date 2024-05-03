@@ -50,6 +50,10 @@ public class CampManagementApplication {
     private static void setInitData() {
         studentStore = new ArrayList<>();
         subjectStore = List.of(
+                new Subject(
+                        sequence(INDEX_TYPE_SUBJECT),
+                        "Java",
+                        SUBJECT_TYPE_MANDATORY
                 ),
                 new Subject(
                         sequence(INDEX_TYPE_SUBJECT),
