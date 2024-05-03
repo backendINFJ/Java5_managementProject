@@ -1,10 +1,10 @@
 package camp.model;
 
-public class Student {
+public class StudentEx {
     private String studentId;
     private String studentName;
 
-    public Student(String seq, String studentName) {
+    public StudentEx(String seq, String studentName) {
         this.studentId = seq;
         this.studentName = studentName;
     }

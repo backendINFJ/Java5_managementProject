@@ -1,9 +1,9 @@
 package camp.model;
 
-public class Score {
+public class ScoreEx {
     private String scoreId;
 
-    public Score(String seq) {
+    public ScoreEx(String seq) {
         this.scoreId = seq;
     }
 

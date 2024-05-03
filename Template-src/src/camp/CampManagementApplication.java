@@ -1,8 +1,8 @@
 package camp;
 
-import camp.model.Score;
-import camp.model.Student;
-import camp.model.Subject;
+import camp.model.ScoreEx;
+import camp.model.StudentEx;
+import camp.model.SubjectEx;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +18,9 @@ import java.util.Scanner;
  */
 public class CampManagementApplication {
     // 데이터 저장소
-    private static List<Student> studentStore;
-    private static List<Subject> subjectStore;
-    private static List<Score> scoreStore;
+    private static List<StudentEx> studentExStore;
+    private static List<SubjectEx> subjectExStore;
+    private static List<ScoreEx> scoreStore;
 
     // 과목 타입
     private static String SUBJECT_TYPE_MANDATORY = "MANDATORY";
@@ -48,49 +48,49 @@ public class CampManagementApplication {
 
     // 초기 데이터 생성
     private static void setInitData() {
-        studentStore = new ArrayList<>();
-        subjectStore = List.of(
-                new Subject(
+        studentExStore = new ArrayList<>();
+        subjectExStore = List.of(
+                new SubjectEx(
                         sequence(INDEX_TYPE_SUBJECT),
                         "Java",
                         SUBJECT_TYPE_MANDATORY
                 ),
-                new Subject(
+                new SubjectEx(
                         sequence(INDEX_TYPE_SUBJECT),
                         "객체지향",
                         SUBJECT_TYPE_MANDATORY
                 ),
-                new Subject(
+                new SubjectEx(
                         sequence(INDEX_TYPE_SUBJECT),
                         "Spring",
                         SUBJECT_TYPE_MANDATORY
                 ),
-                new Subject(
+                new SubjectEx(
                         sequence(INDEX_TYPE_SUBJECT),
                         "JPA",
                         SUBJECT_TYPE_MANDATORY
                 ),
-                new Subject(
+                new SubjectEx(
                         sequence(INDEX_TYPE_SUBJECT),
                         "MySQL",
                         SUBJECT_TYPE_MANDATORY
                 ),
-                new Subject(
+                new SubjectEx(
                         sequence(INDEX_TYPE_SUBJECT),
                         "디자인 패턴",
                         SUBJECT_TYPE_CHOICE
                 ),
-                new Subject(
+                new SubjectEx(
                         sequence(INDEX_TYPE_SUBJECT),
                         "Spring Security",
                         SUBJECT_TYPE_CHOICE
                 ),
-                new Subject(
+                new SubjectEx(
                         sequence(INDEX_TYPE_SUBJECT),
                         "Redis",
                         SUBJECT_TYPE_CHOICE
                 ),
-                new Subject(
+                new SubjectEx(
                         sequence(INDEX_TYPE_SUBJECT),
                         "MongoDB",
                         SUBJECT_TYPE_CHOICE
@@ -171,7 +171,7 @@ public class CampManagementApplication {
         String studentName = sc.next();
         // 기능 구현 (필수 과목, 선택 과목)
 
-        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
+        StudentEx studentEx = new StudentEx(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
         // 기능 구현
         System.out.println("수강생 등록 성공!\n");
     }
