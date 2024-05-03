@@ -1,29 +1,23 @@
+public class Subject {
+    private String subjectId;
+    private SubjectList subjectList;
 
-
-public enum Subject {
-    // 상수로 과목 생성
-
-     JAVA(SubjectType.MANDATORY, "Java"),
-     OBJECT_ORIENTED(SubjectType.MANDATORY,"객체지향"),
-     SPRING(SubjectType.MANDATORY,"Spring"),
-     JPA(SubjectType.MANDATORY,"JPA"),
-     MYSQL(SubjectType.MANDATORY,"MYSQL"),
-     DESIGN_PATTERN(SubjectType.CHOICE,"디자인 패턴"),
-     SPRING_SECURITY(SubjectType.CHOICE,"Spring Security"),
-     REDIS(SubjectType.CHOICE,"Redis"),
-     MONGODB(SubjectType.CHOICE,"MongoDB")
-     ;
-
-
-    private final String subjectName;
-    private final SubjectType subjectType;
-
-
-
-    Subject(SubjectType subjectType , String subjectName) {
-       this.subjectName = subjectName;
-       this.subjectType = subjectType;
+    // SubjectList 타입, SubjectType을 받음
+    public Subject(String seq, SubjectList subjectList) {
+        this.subjectId = seq;
+        this.subjectList = subjectList;
 
     }
+
+    // Getter
+    public String getSubjectId() {
+        return subjectId;
+    }
+
+    public SubjectList getSubjectList() {
+        return subjectList;
+    }
+
+
 
 }
