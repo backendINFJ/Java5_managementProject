@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+    // 됐냐
 /**
  * Notification
  * Java, 객체지향이 아직 익숙하지 않은 분들은 위한 소스코드 틀입니다.
@@ -112,6 +112,7 @@ public class ManagementMain {
             System.out.println("3. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
+            sc.nextLine();
 
             switch (input) {
                 case 1 -> createStudent(); // 수강생 등록
