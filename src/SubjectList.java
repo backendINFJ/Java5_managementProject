@@ -19,10 +19,11 @@ public enum SubjectList {
     private final SubjectType subjectType;
 
 
-    // Subject 타입의 subjectType 와 String 타입의 subjectName을 입렵받는다
+    // Subject 타입의 subjectType 와 String 타입의 subjectName을 가진다
     SubjectList(SubjectType subjectType , String subjectName) {
        this.subjectName = subjectName;
        this.subjectType = subjectType;
+
 
     }
     // Getter
@@ -33,4 +34,6 @@ public enum SubjectList {
     public SubjectType getSubjectType() {
         return subjectType;
     }
+
+
 }
