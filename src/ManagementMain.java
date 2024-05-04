@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,8 +17,8 @@ public class ManagementMain {
     private static List<Score> scoreStore;
 
     // 과목 타입
-    private static String SUBJECT_TYPE_MANDATORY = "MANDATORY";
-    private static String SUBJECT_TYPE_CHOICE = "CHOICE";
+    private static final String SUBJECT_TYPE_MANDATORY = "MANDATORY";
+    private static final String SUBJECT_TYPE_CHOICE = "CHOICE";
 
     // index 관리 필드
     private static int studentIndex;
@@ -30,7 +29,7 @@ public class ManagementMain {
     private static final String INDEX_TYPE_SCORE = "SC";
 
     // 스캐너
-    private static Scanner sc = new Scanner(System.in);
+    private static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
         setInitData();
@@ -46,14 +45,15 @@ public class ManagementMain {
         studentStore = new ArrayList<>(); // 학생 배열 초기화
         // 과목 배열 초기화 , Enum을 활용하여 리펙토링
         subjectStore = List.of(
-               new  Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.JAVA),
-               new  Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.OBJECT_ORIENTED),
-               new  Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.SPRING),
-               new  Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.JPA),
-               new  Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.MYSQL),
-               new  Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.DESIGN_PATTERN),
-               new  Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.SPRING_SECURITY),
-               new  Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.MONGODB)
+                new Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.JAVA),
+                new Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.OBJECT_ORIENTED),
+                new Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.SPRING),
+                new Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.JPA),
+                new Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.MYSQL),
+                new Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.DESIGN_PATTERN),
+                new Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.SPRING_SECURITY),
+                new Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.REDIS),
+                new Subject(sequence(INDEX_TYPE_SUBJECT), SubjectList.MONGODB)
         );
         scoreStore = new ArrayList<>(); // 점수 배열 초기화
     }
@@ -78,7 +78,6 @@ public class ManagementMain {
     }
 
     private static void displayMainView() throws InterruptedException {
-        System.out.println(subjectStore);
         boolean flag = true;
         while (flag) {
             System.out.println("\n==================================");
@@ -88,6 +87,7 @@ public class ManagementMain {
             System.out.println("3. 프로그램 종료");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
+            sc.nextLine();
 
             switch (input) {
                 case 1 -> displayStudentView(); // 수강생 관리
@@ -129,13 +129,65 @@ public class ManagementMain {
     private static void createStudent() {
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
-        String studentName = sc.next();
-        // 기능 구현 (필수 과목, 선택 과목)
+        String studentName = sc.nextLine();
+        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성
+        System.out.println(student.getStudentId() + "   " + studentName); // 수강생 인스턴스 생성확인
 
-        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
+        // 기능 구현 (필수 과목, 선택 과목)
+        //필수과목
+        int mandatoryNum = 0;
+        loop:
+        while (mandatoryNum < 5) {
+            //필수과목 3개가 넘으면 물어보기
+            if (mandatoryNum >= 3) {
+                System.out.print("더 선택하시겠습니까?(필수과목 최대 5개 수강 가능): \n 1.네 \n 2.아니요 ");
+                int additionalChoice = Integer.parseInt(sc.nextLine());
+                switch (additionalChoice) {
+                    case 1:break;  //현재 진행중인 반복문을 종료하고 조건문으로 이동한다.
+                    case 2:break loop;
+                }
+            }
+            //필수과목 리시트 보여주기
+            System.out.println("========================================================================");
+            for (Subject subject : subjectStore) {
+                SubjectList s = subject.getSubjectList();
+                if (s.getSubjectType() == SubjectType.MANDATORY) {
+                    System.out.println("타입: " + s.getSubjectType() + ", 과목이름: " + s.getSubjectName());
+                }
+            }
+            System.out.println("========================================================================");
+            //필수과목 입력받기
+            System.out.print("필수 과목을 선택하세요(3개이상): ");
+            String mandatoryChoice = sc.nextLine();
+            mandatoryNum++;
+            System.out.println( "현재 선택한 필수과목: " +mandatoryNum + " 개" );
+        }
+
+        //선택과목
+        int choiceNum = 0;
+        loop:
+        while (choiceNum < scoreStore.size()) {
+            //선택과목 리시트 보여주기
+            for (Subject subject : subjectStore) {
+                SubjectList s = subject.getSubjectList();
+                if (s.getSubjectType() == SubjectType.CHOICE) {
+                    System.out.println("타입: " + s.getSubjectType() + ", 과목이름: " + s.getSubjectName());
+                }
+            }
+            //선택과목 입력받기
+            System.out.print("선택 과목을 선택하세요(2개이상): ");
+            String mandatoryChoice = sc.nextLine();
+            choiceNum++;
+            System.out.println( "현재 선택한 필수과목: " +choiceNum + " 개" );
+        }
         // 기능 구현
         System.out.println("수강생 등록 성공!\n");
     }
+
+
+
+
+
 
     // 수강생 목록 조회
     private static void inquireStudent() {

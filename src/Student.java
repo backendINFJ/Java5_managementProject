@@ -5,7 +5,7 @@ public class Student {
 
 
     // Student 기본생성자
-    public Student( String studentName, String studentId) {
+    public Student( String studentId, String studentName) {
         this.studentId = studentId;
         this.studentName = studentName;
     }
