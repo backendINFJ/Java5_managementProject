@@ -128,60 +128,19 @@ public class ManagementMain {
 
     // 수강생 등록
     private static void createStudent() {
-        System.out.println("\n수강생을 등록합니다...");
-        System.out.print("수강생 이름 입력: ");
-        String studentName = sc.nextLine();
-        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성
-        System.out.println(student.getStudentId() + "   " + studentName); // 수강생 인스턴스 생성확인
+        StudentMethod studentMethod = new StudentMethod();
+        // 기능구현 - by 정근
+            // inItMethod 로 INDEX_TYPE_STUDENT 만 넘겨주면 Student 인스턴스를 리턴받음
+          Student student = studentMethod.inItMethod(sequence(INDEX_TYPE_STUDENT));
+          System.out.println(student.getStudentId() + "   " + student.getStudentName()); // 수강생 인스턴스 생성확인
 
         // 기능 구현 (필수 과목, 선택 과목)
         //필수과목
-        int mandatoryNum = 0;
-        loop:
-        while (mandatoryNum < 5) {
-            //필수과목 3개가 넘으면 물어보기
-            if (mandatoryNum >= 3) {
-                System.out.print("더 선택하시겠습니까?(필수과목 최대 5개 수강 가능): \n 1.네 \n 2.아니요 ");
-                int additionalChoice = Integer.parseInt(sc.nextLine());
-                switch (additionalChoice) {
-                    case 1:break;  //현재 진행중인 반복문을 종료하고 조건문으로 이동한다.
-                    case 2:break loop;
-                }
-            }
-            //필수과목 리시트 보여주기
-            System.out.println("========================================================================");
-            for (Subject subject : subjectStore) {
-                SubjectList s = subject.getSubjectList();
-                if (s.getSubjectType() == SubjectType.MANDATORY) {
-                    System.out.println("타입: " + s.getSubjectType() + ", 과목이름: " + s.getSubjectName());
-                }
-            }
-            System.out.println("========================================================================");
-            //필수과목 입력받기
-            System.out.print("필수 과목을 선택하세요(3개이상): ");
-            String mandatoryChoice = sc.nextLine();
-            mandatoryNum++;
-            System.out.println( "현재 선택한 필수과목: " +mandatoryNum + " 개" );
-        }
+        studentMethod.mandatoryMethod(subjectStore);
 
         //선택과목
-        int choiceNum = 0;
-        loop:
-        while (choiceNum < scoreStore.size()) {
-            //선택과목 리시트 보여주기
-            for (Subject subject : subjectStore) {
-                SubjectList s = subject.getSubjectList();
-                if (s.getSubjectType() == SubjectType.CHOICE) {
-                    System.out.println("타입: " + s.getSubjectType() + ", 과목이름: " + s.getSubjectName());
-                }
-            }
-            //선택과목 입력받기
-            System.out.print("선택 과목을 선택하세요(2개이상): ");
-            String mandatoryChoice = sc.nextLine();
-            choiceNum++;
-            System.out.println( "현재 선택한 필수과목: " +choiceNum + " 개" );
-        }
-        // 기능 구현
+        studentMethod.choiceMethod(subjectStore);
+
         System.out.println("수강생 등록 성공!\n");
     }
 
