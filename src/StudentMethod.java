@@ -26,7 +26,7 @@ public class StudentMethod {
         for (Subject subject : subjectStore) {
             SubjectList s = subject.getSubjectList();
             if (s.getSubjectType() == SubjectType.MANDATORY) {
-                System.out.println("타입: " + s.getSubjectType() + ", 과목이름: " + s.getSubjectName());
+                System.out.println((s.ordinal() + 1) +  ". 타입: " + s.getSubjectType() + ", 과목이름: " + s.getSubjectName());
             }
         }
         System.out.println("========================================================================");
