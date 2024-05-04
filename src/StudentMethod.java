@@ -86,4 +86,15 @@ public class StudentMethod {
 
         }
     }
+
+    public void lookUp(List<Student> studentStore) {
+        System.out.println("\n수강생 목록을 조회합니다...");
+        for (Student student : studentStore) {
+            System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId());
+        }
+
+        // 기능 구현
+        System.out.println("\n수강생 목록 조회 성공!");
+
+    }
 }

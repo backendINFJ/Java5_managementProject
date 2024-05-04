@@ -39,14 +39,14 @@ public class ManagementMain {
         setInitData();
 
 
-
-        try {
-            displayMainView();
-        } catch (Exception e) {
-            System.out.println("\n오류 발생!\n프로그램을 종료합니다.");
+        while (true) {
+            try {
+                displayMainView();
+            } catch (Exception e) {
+                System.out.println("\n오류 발생!\n프로그램을 종료합니다.");
+            }
         }
     }
-
 
 
 
@@ -140,11 +140,10 @@ public class ManagementMain {
     // 수강생 등록
     private static void createStudent() {
         StudentMethod studentMethod = new StudentMethod();
-
         // 기능구현 - by 정근
             // inItMethod 로 INDEX_TYPE_STUDENT 만 넘겨주면 Student 인스턴스를 리턴받음
           Student student = studentMethod.inItMethod(sequence(INDEX_TYPE_STUDENT));
-
+            studentStore.add(student);
         // 기능 구현 (필수 과목, 선택 과목)
         //필수과목 입력받고 저장하기
         studentMethod.mandatoryMethod(student ,subjectStore);
@@ -159,8 +158,6 @@ public class ManagementMain {
         for (Object o : studentSubjectList) {
             System.out.println(o);
         }
-
-
         System.out.println("수강생 등록 성공!\n");
 
 
@@ -173,9 +170,9 @@ public class ManagementMain {
 
     // 수강생 목록 조회
     private static void inquireStudent() {
-        System.out.println("\n수강생 목록을 조회합니다...");
-        // 기능 구현
-        System.out.println("\n수강생 목록 조회 성공!");
+        StudentMethod studentMethod = new StudentMethod();
+        studentMethod.lookUp(studentStore);
+        // made by 정근
     }
 
     private static void displayScoreView() {
