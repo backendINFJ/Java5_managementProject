@@ -31,14 +31,25 @@ public class ManagementMain {
     // 스캐너
     private static final Scanner sc = new Scanner(System.in);
 
+
+
+
+    // 실행부분
     public static void main(String[] args) {
         setInitData();
+
+
+
         try {
             displayMainView();
         } catch (Exception e) {
             System.out.println("\n오류 발생!\n프로그램을 종료합니다.");
         }
     }
+
+
+
+
 
     // 초기 데이터 생성
     private static void setInitData() {
@@ -129,19 +140,30 @@ public class ManagementMain {
     // 수강생 등록
     private static void createStudent() {
         StudentMethod studentMethod = new StudentMethod();
+
         // 기능구현 - by 정근
             // inItMethod 로 INDEX_TYPE_STUDENT 만 넘겨주면 Student 인스턴스를 리턴받음
           Student student = studentMethod.inItMethod(sequence(INDEX_TYPE_STUDENT));
-          System.out.println(student.getStudentId() + "   " + student.getStudentName()); // 수강생 인스턴스 생성확인
 
         // 기능 구현 (필수 과목, 선택 과목)
-        //필수과목
-        studentMethod.mandatoryMethod(subjectStore);
+        //필수과목 입력받고 저장하기
+        studentMethod.mandatoryMethod(student ,subjectStore);
 
-        //선택과목
-        studentMethod.choiceMethod(subjectStore);
+        //선택과목 입력받고 저장하기
+        studentMethod.choiceMethod(student, subjectStore);
+
+
+        // 리스트 확인
+        System.out.println(student.getStudentId() + "   " + student.getStudentName()); // 수강생 인스턴스 생성확인
+        ArrayList studentSubjectList = student.getStudentSubjectList();
+        for (Object o : studentSubjectList) {
+            System.out.println(o);
+        }
+
 
         System.out.println("수강생 등록 성공!\n");
+
+
     }
 
 
