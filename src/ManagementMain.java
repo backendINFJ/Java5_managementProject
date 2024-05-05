@@ -16,9 +16,6 @@ public class ManagementMain {
     private static List<Subject> subjectStore;
     private static List<Score> scoreStore;
 
-    // 과목 타입
-    private static final String SUBJECT_TYPE_MANDATORY = "MANDATORY";
-    private static final String SUBJECT_TYPE_CHOICE = "CHOICE";
 
     // index 관리 필드
     private static int studentIndex;
@@ -154,7 +151,7 @@ public class ManagementMain {
 
         // 리스트 확인
         System.out.println(student.getStudentId() + "   " + student.getStudentName()); // 수강생 인스턴스 생성확인
-        ArrayList studentSubjectList = student.getStudentSubjectList();
+        ArrayList<String> studentSubjectList = student.getStudentSubjectList();
         for (Object o : studentSubjectList) {
             System.out.println(o);
         }
