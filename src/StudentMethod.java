@@ -3,42 +3,77 @@ import java.util.List;
 import java.util.Scanner;
 
 public class StudentMethod {
+    // 중복과 과목일치 확인을 위해 임시로 만든 리스트
+    private ArrayList<String> mandatoryTempList;
+    private ArrayList<String> choiceTempList;
 
-     Scanner sc = new Scanner(System.in);
+
+    Scanner sc = new Scanner(System.in);
 
     // 수강생 관리 메서드 클래스
-    public Student inItMethod( String studentId) {
+    public Student inItMethod(String studentId) {
 
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.nextLine();
-        Student student = new Student(studentId,studentName);
-        return  student;
+        Student student = new Student(studentId, studentName);
+        return student;
     }
 
 
-
     //필수과목 등록 및 저장 메서드
-     public void mandatoryMethod(Student student, List<Subject> subjectStore) {
-
+    public void mandatoryMethod(Student student, List<Subject> subjectStore) {
+        mandatoryTempList = new ArrayList<>();
         //필수과목 리시트 보여주기
         System.out.println("========================================================================");
         for (Subject subject : subjectStore) {
             SubjectList s = subject.getSubjectList();
             if (s.getSubjectType() == SubjectType.MANDATORY) {
-                System.out.println("타입: " + s.getSubjectType() + ", 과목이름: " + s.getSubjectName());
+                mandatoryTempList.add(s.getSubjectName()); // 필수과목 임시리스트에 저장
+                System.out.println((s.ordinal() + 1) + ". 타입: " + s.getSubjectType() + ", 과목이름: " + s.getSubjectName());
             }
         }
         System.out.println("========================================================================");
+
+
         //필수과목 입력받기
+        //단축 리스트에 실제 저장될 getStudentSubjectList 담기
+        ArrayList<String> s = student.getStudentSubjectList();
         loop:
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 0; i < mandatoryTempList.size(); i++) {
+
             System.out.print("필수 과목을 선택하세요(3개이상): ");
             String mandatoryChoice = sc.nextLine();
-            student.getStudentSubjectList().add(mandatoryChoice);
 
-            if (i >= 3) {
-                System.out.print("더 선택하시겠습니까?(필수과목 최대 5개 수강 가능): \n 1.네 \n 2.아니요 ");
+            // 중복 검사
+            boolean flag1 = s.contains(mandatoryChoice); // 추가하는 값이 중복되어 있으면 true
+            if (flag1) {
+                System.out.println("중복된 값을 입력하셨습니다. \n 다시 입력하세요.");
+                i--;
+                continue;
+            }
+
+            //유효한 과목인지 검사
+            boolean flag2 = mandatoryTempList.contains(mandatoryChoice); // 추가하는 값이 존재하는 값이면 true
+            //입력하는 과목이 존재하는지 확인후 존재하면 추가
+            if (flag2) {
+                s.add(mandatoryChoice);
+                System.out.println((i + 1) + "개 저장완료");
+
+                //리스트 확인
+                for (String a : s) {
+                    System.out.print(a + "  ");
+                }
+                System.out.println();
+            } else {
+                System.out.println("과목에 없는 값을 입력하셨습니다. \n 다시 입력하세요");
+                i--; // i를 하나 줄이고 다시 반복문을 실행
+                continue;
+            }
+
+
+            if (i >= 2 && i < 4) {
+                System.out.print("더 선택하시겠습니까?(필수과목 최대 5개 수강 가능) \n 1.네 \n 2.아니요 ");
                 int additionalChoice = Integer.parseInt(sc.nextLine());
                 switch (additionalChoice) {
                     case 1:
@@ -52,28 +87,57 @@ public class StudentMethod {
     }
 
 
-
-
     // 선택과목 등록 및 저장하기
-   public void choiceMethod(Student student, List<Subject> subjectStore) {
+    public void choiceMethod(Student student, List<Subject> subjectStore) {
+        choiceTempList = new ArrayList<>();
+        //단축 리스트에 실제 저장될 getStudentSubjectList 담기
+        ArrayList<String> s = student.getStudentSubjectList();
+
+        //선택과목 입력받기
+        System.out.println("선택과목을 입력받습니다.");
+        System.out.println();
         //선택과목 리시트 보여주기
         System.out.println("========================================================================");
         for (Subject subject : subjectStore) {
-            SubjectList s = subject.getSubjectList();
-            if (s.getSubjectType() == SubjectType.CHOICE) {
-                System.out.println("타입: " + s.getSubjectType() + ", 과목이름: " + s.getSubjectName());
+            SubjectList subjectList = subject.getSubjectList();
+            choiceTempList.add(subjectList.getSubjectName()); // 선택과목 임시리스트에 저장
+            if (subjectList.getSubjectType() == SubjectType.CHOICE) {
+                System.out.println("타입: " + subjectList.getSubjectType() + ", 과목이름: " + subjectList.getSubjectName());
             }
         }
         System.out.println("========================================================================");
 
-        //선택과목 입력받기
-        System.out.println("선택과목을 입력받습니다.");
+
+
         loop:
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 0; i <= 4; i++) {
             System.out.print("선택과목을 선택하세요(2개이상): ");
             String choiceSubject = sc.nextLine();
-            student.getStudentSubjectList().add(choiceSubject);
-            if (i >= 2) {
+            // 중복 검사
+            boolean flag1 = s.contains(choiceSubject); // 추가하는 값이 중복되어 있으면 true
+            if (flag1) {
+                System.out.println("중복된 값을 입력하셨습니다. \n 다시 입력하세요.");
+                i--;
+                continue;
+            }
+
+            //유효한 과목인지 검사
+            //입력하는 과목이 존재하는지 확인후 존재하면 추가
+            boolean flag2 = choiceTempList.contains(choiceSubject); // 추가하는 값이 존재하는 값이면 true
+            if (flag2) {
+               s.add(choiceSubject);
+                System.out.println((i + 1) + "개 저장완료");
+                //리스트 확인
+                for (String a : s) {
+                    System.out.print(a + "  ");
+                }
+                System.out.println();
+            }else {
+                System.out.println("과목에 없는 값을 입력하셨습니다. \n 다시 입력하세요");
+                i--; // i를 하나 줄이고 다시 반복문을 실행
+                continue;
+            }
+            if (i >= 1 && i < 4) {
                 System.out.print("더 선택하시겠습니까?(선택과목 제한 없음): \n 1.네 \n 2.아니요 ");
                 int additionalChoice = Integer.parseInt(sc.nextLine());
                 switch (additionalChoice) {
