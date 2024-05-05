@@ -62,7 +62,7 @@ public class StudentMethod {
 
                 //리스트 확인
                 for (String a : s) {
-                    System.out.print(a + "  ");
+                    System.out.print( " [" +  a + "] ");
                 }
                 System.out.println();
             } else {
@@ -72,8 +72,8 @@ public class StudentMethod {
             }
 
 
-            if (i >= 2 && i < 4) {
-                System.out.print("더 선택하시겠습니까?(필수과목 최대 5개 수강 가능) \n 1.네 \n 2.아니요 ");
+            if (i >= 2 && i < mandatoryTempList.size() - 1) {
+                System.out.println("더 선택하시겠습니까?(필수과목 최대 5개 수강 가능) \n 1.네 \n 2.아니요 ");
                 int additionalChoice = Integer.parseInt(sc.nextLine());
                 switch (additionalChoice) {
                     case 1:
@@ -94,23 +94,24 @@ public class StudentMethod {
         ArrayList<String> s = student.getStudentSubjectList();
 
         //선택과목 입력받기
-        System.out.println("선택과목을 입력받습니다.");
         System.out.println();
+        System.out.println("선택과목을 입력받습니다.");
         //선택과목 리시트 보여주기
         System.out.println("========================================================================");
         for (Subject subject : subjectStore) {
             SubjectList subjectList = subject.getSubjectList();
-            choiceTempList.add(subjectList.getSubjectName()); // 선택과목 임시리스트에 저장
+
             if (subjectList.getSubjectType() == SubjectType.CHOICE) {
+                choiceTempList.add(subjectList.getSubjectName()); // 선택과목 임시리스트에 저장
                 System.out.println("타입: " + subjectList.getSubjectType() + ", 과목이름: " + subjectList.getSubjectName());
             }
         }
         System.out.println("========================================================================");
 
-
+        System.out.println(choiceTempList.size());
 
         loop:
-        for (int i = 0; i <= 4; i++) {
+        for (int i = 0; i < choiceTempList.size(); i++) {
             System.out.print("선택과목을 선택하세요(2개이상): ");
             String choiceSubject = sc.nextLine();
             // 중복 검사
@@ -128,8 +129,9 @@ public class StudentMethod {
                s.add(choiceSubject);
                 System.out.println((i + 1) + "개 저장완료");
                 //리스트 확인
+                System.out.print("현재 선택한 과목: ");
                 for (String a : s) {
-                    System.out.print(a + "  ");
+                    System.out.print( " [" +  a + "] ");
                 }
                 System.out.println();
             }else {
@@ -137,8 +139,8 @@ public class StudentMethod {
                 i--; // i를 하나 줄이고 다시 반복문을 실행
                 continue;
             }
-            if (i >= 1 && i < 4) {
-                System.out.print("더 선택하시겠습니까?(선택과목 제한 없음): \n 1.네 \n 2.아니요 ");
+            if (i >= 1 && i < choiceTempList.size() - 1) {
+                System.out.println("더 선택하시겠습니까?(선택과목 제한 없음): \n 1.네 \n 2.아니요 ");
                 int additionalChoice = Integer.parseInt(sc.nextLine());
                 switch (additionalChoice) {
                     case 1:
