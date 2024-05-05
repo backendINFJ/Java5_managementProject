@@ -48,7 +48,8 @@ public class StudentMethod {
             // 중복 검사
             boolean flag1 = s.contains(mandatoryChoice); // 추가하는 값이 중복되어 있으면 true
             if (flag1) {
-                System.out.println("중복된 값을 입력하셨습니다. \n 다시 입력하세요.");
+                System.out.println("중복된 값을 입력하셨습니다. \n다시 입력하세요.");
+                System.out.println("중복된 과목: [" + mandatoryChoice + "]" ); // 중복된 과목 출력
                 i--;
                 continue;
             }
@@ -117,7 +118,8 @@ public class StudentMethod {
             // 중복 검사
             boolean flag1 = s.contains(choiceSubject); // 추가하는 값이 중복되어 있으면 true
             if (flag1) {
-                System.out.println("중복된 값을 입력하셨습니다. \n 다시 입력하세요.");
+                System.out.println("중복된 값을 입력하셨습니다. \n다시 입력하세요.");
+                System.out.println("중복된 과목: [" + choiceSubject + "]" ); //중복된 과목 출력
                 i--;
                 continue;
             }
@@ -135,7 +137,7 @@ public class StudentMethod {
                 }
                 System.out.println();
             }else {
-                System.out.println("과목에 없는 값을 입력하셨습니다. \n 다시 입력하세요");
+                System.out.println("과목에 없는 값을 입력하셨습니다. \n다시 입력하세요");
                 i--; // i를 하나 줄이고 다시 반복문을 실행
                 continue;
             }
