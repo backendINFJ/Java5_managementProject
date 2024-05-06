@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-    // dev로 가자
+import java.util.*;
+// dev로 가자
 /**
  * Notification
  * Java, 객체지향이 아직 익숙하지 않은 분들은 위한 소스코드 틀입니다.
@@ -33,9 +31,7 @@ public class ManagementMain {
 
     // 실행부분
     public static void main(String[] args) {
-        setInitData();
-
-
+        setInitData(); //데이터 생성.
         while (true) {
             try {
                 displayMainView();
@@ -139,8 +135,8 @@ public class ManagementMain {
         StudentMethod studentMethod = new StudentMethod();
         // 기능구현 - by 정근
             // inItMethod 로 INDEX_TYPE_STUDENT 만 넘겨주면 Student 인스턴스를 리턴받음
-          Student student = studentMethod.inItMethod(sequence(INDEX_TYPE_STUDENT));
-            studentStore.add(student);
+        Student student = studentMethod.inItMethod(sequence(INDEX_TYPE_STUDENT));
+        studentStore.add(student);
         // 기능 구현 (필수 과목, 선택 과목)
         //필수과목 입력받고 저장하기
         studentMethod.mandatoryMethod(student ,subjectStore);
@@ -204,8 +200,50 @@ public class ManagementMain {
 
     // 수강생의 과목별 시험 회차 및 점수 등록
     private static void createScore() {
+        String selectSubject;
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
+        System.out.println("==================================");
+        for (Student student : studentStore){
+            if (student.getStudentId().equals(studentId)){
+
+                System.out.println(student.getStudentId() + " " + student.getStudentName() + "의 점수를 등록합니다.");
+                for (int i = 0; i < student.getStudentSubjectList().size();i++){
+                    String subject = student.getStudentSubjectList().get(i);
+                    System.out.println(i+1 + ". " + subject);
+                }
+
+                boolean flag = true;
+                sc.nextLine();
+                //반복 체크용 flag.
+                do {
+                    System.out.print("점수를 등록할 과목의 이름을 입력하세요: ");
+                    selectSubject = sc.nextLine();
+                    for (int i = 0; i < student.getStudentSubjectList().size();i++){
+                        String subject = student.getStudentSubjectList().get(i);
+                        if (subject.equals(selectSubject)){
+                            flag = false;
+                        }
+                    }
+                    if(flag) System.out.println("없는 과목입니다. 다시 입력해주세요.");
+                } while (flag);
+
+                Map<String, int[]> scoreMap = student.getStudentScoreMap();
+                System.out.println(selectSubject + "의 점수 등록을 시작합니다...");
+                int score;
+                int[] scoreArr = new int[10];
+                for (int i = 0 ; i < 10 ; i++){
+                    System.out.print(i+1 + "회차 점수 : ");
+                    score = sc.nextInt();
+                    scoreArr[i] = score;
+                }
+                scoreMap.put(selectSubject, scoreArr);
+
+
+            }
+        }
+
         System.out.println("시험 점수를 등록합니다...");
+
         // 기능 구현
         System.out.println("\n점수 등록 성공!");
     }
