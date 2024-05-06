@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/B11-teamProject-management-app.iml" filepath="$PROJECT_DIR$/B11-teamProject-management-app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Template-src/Template-src.iml" filepath="$PROJECT_DIR$/Template-src/Template-src.iml" />
     </modules>
   </component>
 </project>
