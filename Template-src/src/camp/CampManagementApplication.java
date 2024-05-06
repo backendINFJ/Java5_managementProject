@@ -23,8 +23,8 @@ public class CampManagementApplication {
     private static List<Score> scoreStore;
 
     // 과목 타입
-    private static String SUBJECT_TYPE_MANDATORY = "MANDATORY";
-    private static String SUBJECT_TYPE_CHOICE = "CHOICE";
+    private static String SUBJECT_TYPE_MANDATORY = "필수 과목";
+    private static String SUBJECT_TYPE_CHOICE = "선택 과목";
 
     // index 관리 필드
     private static int studentIndex;
@@ -170,10 +170,44 @@ public class CampManagementApplication {
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
         // 기능 구현 (필수 과목, 선택 과목)
-
         Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
+
+        pickSubject(student);
+
+        studentStore.add(student);
         // 기능 구현
         System.out.println("수강생 등록 성공!\n");
+    }
+
+    private static void pickSubject(Student student){
+
+        for (Subject subjectInstance : subjectStore){
+            System.out.println("과목 아이디: "+subjectInstance.getSubjectId()+", "+
+                    "과목 이름: "+subjectInstance.getSubjectName()+", "+
+                    "과목 타입: "+subjectInstance.getSubjectType());
+
+        }
+        System.out.println("최소 3개 이상의 필수 과목, 2개 이상의 선택 과목을 선택합니다.");
+        System.out.println("추가할 과목의 아이디를 \",\"(쉼표)를 이용해서 적어주세요. 예) 1,3,5,7,9");
+        sc.nextLine();
+        String pick =  sc.nextLine();
+        String[] pickArr = pick.split(",");
+        for (Subject subjectItem : subjectStore){
+            String subId = subjectItem.getSubjectId();
+            String subName = subjectItem.getSubjectName();
+            String subType = subjectItem.getSubjectType();
+
+            for (String pickItem : pickArr){
+                pickItem = "SU" + pickItem;
+                if(pickItem.equals(subId)){
+                    student.setStudentSubjectStore(subjectItem);
+                    System.out.print(subName+",");
+                }
+            }
+
+        } System.out.println("추가한 과목들입니다.");
+//        System.out.println(Arrays.toString(pickArr));
+
     }
 
     // 수강생 목록 조회
