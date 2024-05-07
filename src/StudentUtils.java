@@ -2,16 +2,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class StudentMethod {
+public class StudentUtils {
     // 중복과 과목일치 확인을 위해 임시로 만든 리스트
-    private ArrayList<String> mandatoryTempList;
-    private ArrayList<String> choiceTempList;
 
 
-    Scanner sc = new Scanner(System.in);
+
+
+    static Scanner sc = new Scanner(System.in);
 
     // 수강생 관리 메서드 클래스
-    public Student inItMethod(String studentId) {
+    public static Student inItMethod(String studentId) {
 
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
@@ -22,8 +22,9 @@ public class StudentMethod {
 
 
     //필수과목 등록 및 저장 메서드
-    public void mandatoryMethod(Student student, List<Subject> subjectStore) {
-        mandatoryTempList = new ArrayList<>();
+    public static void mandatoryMethod(Student student, List<Subject> subjectStore) {
+        ArrayList<String> mandatoryTempList = new ArrayList<>();
+
         //필수과목 리시트 보여주기
         System.out.println("========================================================================");
         for (Subject subject : subjectStore) {
@@ -89,8 +90,9 @@ public class StudentMethod {
 
 
     // 선택과목 등록 및 저장하기
-    public void choiceMethod(Student student, List<Subject> subjectStore) {
-        choiceTempList = new ArrayList<>();
+    public static void choiceMethod(Student student, List<Subject> subjectStore) {
+        ArrayList<String> choiceTempList = new ArrayList<>();
+
         //단축 리스트에 실제 저장될 getStudentSubjectList 담기
         ArrayList<String> s = student.getStudentSubjectList();
 
@@ -155,14 +157,17 @@ public class StudentMethod {
         }
     }
 
-    public void lookUp(List<Student> studentStore) {
-        System.out.println("\n수강생 목록을 조회합니다...");
-        for (Student student : studentStore) {
-            System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId());
+    public static void lookUp(List<Student> studentStore) {
+        if (studentStore.size() >= 1) {
+            System.out.println("\n수강생 목록을 조회합니다...");
+            for (Student student : studentStore) {
+                System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId());
+            }
+            // 기능 구현
+            System.out.println("\n수강생 목록 조회 성공!");
+        } else {
+            System.out.println("조회할 학생이 없습니다.");
         }
-
-        // 기능 구현
-        System.out.println("\n수강생 목록 조회 성공!");
 
     }
 

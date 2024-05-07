@@ -129,23 +129,23 @@ public class ManagementMain {
     }
 
     private static void removeStudent() {  // by 윤재
-        StudentMethod studentMethod = new StudentMethod();
-        studentMethod.removeStudent(studentStore); // 고유 ID를 불러와서 삭제하기
+        StudentUtils studentUtils = new StudentUtils();
+        studentUtils.removeStudent(studentStore); // 고유 ID를 불러와서 삭제하기
     }
 
     // 수강생 등록
     private static void createStudent() {
-        StudentMethod studentMethod = new StudentMethod();
+
         // 기능구현 - by 정근
         // inItMethod 로 INDEX_TYPE_STUDENT 만 넘겨주면 Student 인스턴스를 리턴받음
-        Student student = studentMethod.inItMethod(sequence(INDEX_TYPE_STUDENT));
+        Student student = StudentUtils.inItMethod(sequence(INDEX_TYPE_STUDENT));
         studentStore.add(student);
         // 기능 구현 (필수 과목, 선택 과목)
         //필수과목 입력받고 저장하기
-        studentMethod.mandatoryMethod(student, subjectStore);
+        StudentUtils.mandatoryMethod(student, subjectStore);
 
         //선택과목 입력받고 저장하기
-        studentMethod.choiceMethod(student, subjectStore);
+        StudentUtils.choiceMethod(student, subjectStore);
 
 
         // 리스트 확인
@@ -162,8 +162,8 @@ public class ManagementMain {
 
     // 수강생 목록 조회
     private static void inquireStudent() {
-        StudentMethod studentMethod = new StudentMethod();
-        studentMethod.lookUp(studentStore);
+        StudentUtils studentUtils = new StudentUtils();
+        studentUtils.lookUp(studentStore);
         // made by 정근
         // 수강생 목록 불러오기
 
