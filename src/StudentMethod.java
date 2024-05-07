@@ -165,4 +165,18 @@ public class StudentMethod {
         System.out.println("\n수강생 목록 조회 성공!");
 
     }
+
+    public void removeStudent(List<Student> studentRemove) { // 학생 정보 삭제 메서드, code by yoonjae
+        System.out.print("삭제할 학생의 ID를 입력하세요: ");
+        String studentId = sc.nextLine();
+
+        for (Student student : studentRemove) {
+            if (student.getStudentId().equals(studentId)) {
+                studentRemove.remove(student);
+                System.out.println("학생 정보가 삭제되었습니다.");
+                return;
+            }
+        }
+        System.out.println("해당 학생 ID를 찾을 수 없습니다.");
+    }
 }

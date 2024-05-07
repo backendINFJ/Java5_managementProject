@@ -109,7 +109,8 @@ public class ManagementMain {
             System.out.println("수강생 관리 실행 중...");
             System.out.println("1. 수강생 등록");
             System.out.println("2. 수강생 목록 조회");
-            System.out.println("3. 메인 화면 이동");
+            System.out.println("3. 수강생 정보 삭제");
+            System.out.println("4. 메인 항목으로 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
             sc.nextLine();
@@ -117,13 +118,19 @@ public class ManagementMain {
             switch (input) {
                 case 1 -> createStudent(); // 수강생 등록
                 case 2 -> inquireStudent(); // 수강생 목록 조회
-                case 3 -> flag = false; // 메인 화면 이동
+                case 3 -> removeStudent(); // 수강생 정보 삭제
+                case 4 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
                 }
             }
         }
+    }
+
+    private static void removeStudent() {  // by 윤재
+        StudentMethod studentMethod = new StudentMethod();
+        studentMethod.removeStudent(studentStore); // 고유 ID를 불러와서 삭제하기
     }
 
     // 수강생 등록
@@ -158,6 +165,8 @@ public class ManagementMain {
         StudentMethod studentMethod = new StudentMethod();
         studentMethod.lookUp(studentStore);
         // made by 정근
+        // 수강생 목록 불러오기
+
     }
 
     private static void displayScoreView() {
@@ -175,7 +184,7 @@ public class ManagementMain {
             switch (input) {
                 case 1 -> createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
                 case 2 -> updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
-                case 3 -> inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
+                case 3 -> inquiryGrade(); // 수강생의 특정 과목 회차별 등급 조회
                 case 4 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
@@ -339,8 +348,8 @@ public class ManagementMain {
         System.out.println("입력한 학생 번호는 잘못 입력됐거나, 존재하지 않습니다.");
     }
 
-    // 수강생의 특정 과목 회차별 등급 조회
-    private static void inquireRoundGradeBySubject() {
+    // 수강생의 특정 과목 회차별 등급 조회 마무리 ,  code by yoonjae
+    private static void inquiryGrade() {
         String selectSubject;
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         if ("exit".equals(studentId)) return;
@@ -402,7 +411,7 @@ public class ManagementMain {
         } else if (score >= 60) {
             return "D";
         } else {
-            return "F";
+            return "F"; // F랑 재시험 고민중에 F로 했습니다~
         }
     }
 
