@@ -277,14 +277,14 @@ public class ManagementMain {
 
                 System.out.println(selectSubject + "의 점수 수정을 원하는 회차를 입력해주세요: ");
                 int round = sc.nextInt();
-                if (1 <= round && round <= 10){
+                if (1 <= round && round <= 10) {
                     int[] scoreArray = scoreMap.get(selectSubject);
                     System.out.println(selectSubject + " 과목, " + round + " 회차의 수정할 점수를 입력해주세요: ");
                     flag = true; //반복 체크
                     do {
                         int updateScore = sc.nextInt();
-                        if (0 <= updateScore && updateScore <= 100){
-                            scoreArray[round-1] = updateScore; //입력받은 회차에 -1을 해야 원하는 index에 접근가능.
+                        if (0 <= updateScore && updateScore <= 100) {
+                            scoreArray[round - 1] = updateScore; //입력받은 회차에 -1을 해야 원하는 index에 접근가능.
                             flag = false;
                         } else {
                             System.out.println("0 ~ 100 사이의 점수로 입력해주세요.");
@@ -302,7 +302,8 @@ public class ManagementMain {
     }
 
     // 수강생의 특정 과목 회차별 등급 조회
-    private static void inquireRoundGradeBySubject() {
+    // 수강생의 특정 과목 회차별 점수 조회
+    private static void inquireRoundScoreBySubject() {
         String selectSubject;
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         if ("exit".equals(studentId)) return;
@@ -332,10 +333,66 @@ public class ManagementMain {
 
                 System.out.println(selectSubject + "과목의 점수를 조회합니다. ");
                 System.out.println(Arrays.toString(scoreMap.get(selectSubject)));
+                return;
+            }
+        }
+        System.out.println("입력한 학생 번호는 잘못 입력됐거나, 존재하지 않습니다.");
+    }
+
+    // 수강생의 특정 과목 회차별 등급 조회
+    private static void inquireRoundGradeBySubject() {
+        String selectSubject;
+        String studentId = getStudentId(); // 관리할 수강생 고유 번호
+        if ("exit".equals(studentId)) return;
+        System.out.println("==================================");
+        for (Student student : studentStore) {
+            if (student.getStudentId().equals(studentId)) {
+                Map<String, int[]> scoreMap = student.getStudentScoreMap();
+                Set<String> subject = scoreMap.keySet();
+                System.out.println(student.getStudentId() + " " + student.getStudentName() + "의 등급을 조회합니다.");
+                for (int i = 0; i < student.getStudentSubjectList().size(); i++) {
+                    System.out.println(i + 1 + ". " + student.getStudentSubjectList().get(i));
+                }
+
+                boolean flag = true; //반복 체크용 flag.
+                sc.nextLine(); //개행문자 비워주기.
+                do {
+                    System.out.print("등급을 조회할 과목의 이름을 입력하세요(돌아가려면 \"exit\"을 입력해주세요): ");
+                    selectSubject = sc.nextLine();
+                    if ("exit".equals(selectSubject)) return;
+                    for (String key : subject) {
+                        if (key.equals(selectSubject)) {
+                            flag = false; //일치하는 과목이 있으면 do-while문 탈출.
+                        }
+                    }
+                    if (flag) System.out.println("과목 이름이 틀렸거나, 점수가 미등록된 과목은 조회할 수 없습니다. 다시 입력해주세요.");
+                } while (flag);
+
+                System.out.println(selectSubject + "과목의 등급을 조회합니다. ");
+                int[] scores = scoreMap.get(selectSubject);
+                for (int i = 0; i < scores.length; i++) {
+                    String grade = getGrade(scores[i]); // 점수에 따른 등급 계산 메서드 호출
+                    System.out.println((i + 1) + "회차 등급: " + grade);
+                }
 
                 return;
             }
         }
         System.out.println("입력한 학생 번호는 잘못 입력됐거나, 존재하지 않습니다.");
+    }
+
+    // 점수에 따른 등급 계산 메서드
+    private static String getGrade(int score) {
+        if (score >= 90) {
+            return "A";
+        } else if (score >= 80) {
+            return "B";
+        } else if (score >= 70) {
+            return "C";
+        } else if (score >= 60) {
+            return "D";
+        } else {
+            return "F";
+        }
     }
 }
