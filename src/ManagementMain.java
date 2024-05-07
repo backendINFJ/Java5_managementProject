@@ -382,6 +382,16 @@ public class ManagementMain {
     }
 
     // 점수에 따른 등급 계산 메서드
+        /* 스위치문이 더 깔끔할 거 같긴한데 저는 스위치로는 깔끔하게 안나오네요 .. 리팩토링 하z셔도 됩니다!
+    private static String getGrade(int score) {
+       char grade;
+       switch (score * 10) {
+           case 9 -> grade = 'A';
+           case 8 -> grade = 'B';
+           case 7 -> grade = 'C';
+           case 6 -> grade = 'D';
+
+       }*/
     private static String getGrade(int score) {
         if (score >= 90) {
             return "A";
@@ -395,4 +405,5 @@ public class ManagementMain {
             return "F";
         }
     }
+
 }
