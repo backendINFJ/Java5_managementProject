@@ -222,14 +222,14 @@ public class ManagementMain {
                 Map<String, int[]> scoreMap = student.getStudentScoreMap();
                 System.out.println(selectSubject + "의 점수 등록을 시작합니다...");
                 int score;
-                int[] scoreArr = new int[10];
+                int[] scoreArray = new int[10];
                 for (int i = 0; i < 10; i++) {
                     flag = true;
                     do {
                         System.out.print(i + 1 + "회차 점수 : ");
                         score = sc.nextInt();
                         if (0 <= score && score <= 100) {
-                            scoreArr[i] = score;
+                            scoreArray[i] = score;
                             //점수를 기반으로 등급을 매겨 저장해준다.
                             flag = false;
                         } else {
@@ -237,7 +237,7 @@ public class ManagementMain {
                         }
                     } while (flag);
                 }
-                scoreMap.put(selectSubject, scoreArr);
+                scoreMap.put(selectSubject, scoreArray);
                 System.out.println(selectSubject + "\n" + Arrays.toString(scoreMap.get(selectSubject)));
                 System.out.println("\n점수 등록 성공!");
                 return;
@@ -278,13 +278,14 @@ public class ManagementMain {
                 System.out.println(selectSubject + "의 점수 수정을 원하는 회차를 입력해주세요: ");
                 int round = sc.nextInt();
                 if (1 <= round && round <= 10){
-                    int[] scoreArray = scoreMap.get(selectSubject);
+//                    int[] scoreArray = scoreMap.get(selectSubject);
                     System.out.println(selectSubject + " 과목, " + round + " 회차의 수정할 점수를 입력해주세요: ");
                     flag = true; //반복 체크
                     do {
                         int updateScore = sc.nextInt();
                         if (0 <= updateScore && updateScore <= 100){
-                            scoreArray[round-1] = updateScore; //입력받은 회차에 -1을 해야 원하는 index에 접근가능.
+                            scoreMap.get(selectSubject)[round-1] = updateScore; //입력받은 회차에 -1을 해야 원하는 index에 접근가능.
+//                            scoreArray[round-1] = updateScore; //입력받은 회차에 -1을 해야 원하는 index에 접근가능.
                             flag = false;
                         } else {
                             System.out.println("0 ~ 100 사이의 점수로 입력해주세요.");
