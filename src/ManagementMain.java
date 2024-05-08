@@ -200,7 +200,7 @@ public class ManagementMain {
             }
         }
     }
-
+ // 멤버 변수로 등급을 가지고 있기 , 점수가 입력되는순간 등급을 반환되는 메서드 가지고 있기 enum
     private static String getStudentId() {
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         return sc.next();
