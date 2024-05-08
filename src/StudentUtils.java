@@ -16,7 +16,9 @@ public class StudentUtils {
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.nextLine();
-        Student student = new Student(studentId, studentName);
+        System.out.print("수강생 상태 입력: ");
+        String studentStatus = sc.nextLine();
+        Student student = new Student(studentId, studentName, studentStatus);
         return student;
     }
 
@@ -161,7 +163,8 @@ public class StudentUtils {
         if (studentStore.size() >= 1) {
             System.out.println("\n수강생 목록을 조회합니다...");
             for (Student student : studentStore) {
-                System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId());
+                System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId()
+                                    + "상태: " + student.getStudentStatus()+ " 과목: " + student.getStudentSubjectList()) ;
             }
             // 기능 구현
             System.out.println("\n수강생 목록 조회 성공!");
