@@ -175,7 +175,13 @@ public class StudentUtils {
 
     public static void StatusLookUp(List<Student> studentStore) {
         if (studentStore.size() >= 1) {
-            System.out.println("\n조회사");
+            System.out.println("\n 조회할 학생 상태를 입력하세요 :");
+            String studentStatus = sc.nextLine();
+            for (Student student : studentStore) {
+                if (student.getStudentStatus().equals(studentStatus)) {
+                    System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId()) ;
+                }
+            }
         }else {
             System.out.println("조회할 학생이 없습니다.");
         }

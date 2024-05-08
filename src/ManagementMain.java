@@ -191,7 +191,27 @@ public class ManagementMain {
     // 수강생 목록 조회
     private static void inquireStudent() {
         StudentUtils studentUtils = new StudentUtils();
-        studentUtils.lookUp(studentStore);
+        boolean flag = true;
+        while (flag) {
+            System.out.println("==================================");
+            System.out.println("수강생 목록 조회 실행 중...");
+            System.out.println("1. 전체 수강생 목록 조회");
+            System.out.println("2. 상태별 수강생 목록 조회");
+            System.out.println("3. 메인 화면 이동");
+            System.out.print("조회 항목을 선택하세요...");
+            int input = sc.nextInt();
+
+            switch (input) {
+                case 1 -> studentUtils.lookUp(studentStore); // 수강생의 과목별 시험 회차 및 점수 등록
+                case 2 -> studentUtils.StatusLookUp(studentStore); // 수강생의 과목별 회차 점수 수정
+                case 3 -> flag = false; // 메인 화면 이동
+                default -> {
+                    System.out.println("잘못된 입력입니다.\n전 화면 이동...");
+                    flag = false;
+                }
+            }
+        }
+
         // made by 정근
         // 수강생 목록 불러오기
 
