@@ -16,7 +16,9 @@ public class StudentUtils {
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.nextLine();
-        Student student = new Student(studentId, studentName);
+        System.out.print("수강생 상태 입력: ");
+        String studentStatus = sc.nextLine();
+        Student student = new Student(studentId, studentName, studentStatus);
         return student;
     }
 
@@ -161,14 +163,28 @@ public class StudentUtils {
         if (studentStore.size() >= 1) {
             System.out.println("\n수강생 목록을 조회합니다...");
             for (Student student : studentStore) {
-                System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId());
+                System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId()
+                                    + " ,상태: " + student.getStudentStatus()+ " ,과목: " + student.getStudentSubjectList()) ;
             }
             // 기능 구현
             System.out.println("\n수강생 목록 조회 성공!");
         } else {
             System.out.println("조회할 학생이 없습니다.");
         }
+    }
 
+    public static void StatusLookUp(List<Student> studentStore) {
+        if (studentStore.size() >= 1) {
+            System.out.println("\n 조회할 학생 상태를 입력하세요 :");
+            String studentStatus = sc.nextLine();
+            for (Student student : studentStore) {
+                if (student.getStudentStatus().equals(studentStatus)) {
+                    System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId()) ;
+                }
+            }
+        }else {
+            System.out.println("조회할 학생이 없습니다.");
+        }
     }
 
     public void removeStudent(List<Student> studentRemove) { // 학생 정보 삭제 메서드, code by yoonjae
@@ -185,4 +201,31 @@ public class StudentUtils {
         System.out.println("해당 학생 고유번호를 찾을 수 없습니다.");
     }
 
+    public void editStudentName(List<Student> studentEdit) {
+        System.out.print("수정할 학생의 ID를 입력하세요: ");
+        String studentId = sc.nextLine();
+
+        for (Student student : studentEdit) {
+            if (student.getStudentId().equals(studentId)) {
+                System.out.println("학생이름: " + student.getStudentName());
+                System.out.print("수정할 학생 이름: ");
+                String studentName = sc.nextLine();
+                student.setStudentName(studentName);
+            }
+        }
+    }
+
+    public void editStudentStatus(List<Student> studentEdit) {
+        System.out.print("수정할 학생의 ID를 입력하세요: ");
+        String studentId = sc.nextLine();
+
+        for (Student student : studentEdit) {
+            if (student.getStudentId().equals(studentId)) {
+                System.out.println("학생 상태: " + student.getStudentStatus());
+                System.out.print("수정할 학생 상태: ");
+                String studentStatus = sc.nextLine();
+                student.setStudentStatus(studentStatus);
+            }
+        }
+    }
 }
