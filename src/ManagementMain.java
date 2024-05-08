@@ -448,25 +448,15 @@ public class ManagementMain {
                         totalMandatorySubjects++;
                         // 평균 등급 계산 및 출력
                         int averageScore = totalScore / (totalMandatorySubjects);
-                        System.out.println("필수 과목 평균 등급: " + averageScore);
+                        String grade = getGrade(averageScore); // 등급 반환
+                        System.out.println("필수 과목 평균 등급: " + getGrade(averageScore));
                         return;
                     }
-                  /*  필수과목 평균등급 계산기 스켈레톤 코드
-                  미구현 기능 : 과목 회차별 평균등급,상태에 대한 필수과목의 총회차의 평균등급*/
-
                 }
-
-                // 필수 과목이 존재하지 않을 경우 메시지 출력
-                if (totalMandatorySubjects == 0) {
-                    System.out.println("필수 과목이 등록되어 있지 않습니다.");
-                    return;
-                }
-
             }
-            System.out.println("입력한 학생 번호는 잘못 입력됐거나, 존재하지 않습니다.");
         }
-
-        // 선택과목 평균등급 계산 메서드
-
     }
 }
+
+
+                // 필수 과목이 존재하지 않을 경우 메시지 출력
