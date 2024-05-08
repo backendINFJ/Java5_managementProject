@@ -172,7 +172,7 @@ public class StudentUtils {
     }
 
     public void removeStudent(List<Student> studentRemove) { // 학생 정보 삭제 메서드, code by yoonjae
-        System.out.print("삭제할 학생의 ID를 입력하세요: ");
+        System.out.print("삭제할 학생의 고유번호를 입력하세요: ");
         String studentId = sc.nextLine();
 
         for (Student student : studentRemove) {
@@ -182,6 +182,7 @@ public class StudentUtils {
                 return;
             }
         }
-        System.out.println("해당 학생 ID를 찾을 수 없습니다.");
+        System.out.println("해당 학생 고유번호를 찾을 수 없습니다.");
     }
+
 }
