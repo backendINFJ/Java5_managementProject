@@ -1,5 +1,6 @@
 import java.util.*;
 // dev로 가자
+
 /**
  * Notification
  * Java, 객체지향이 아직 익숙하지 않은 분들은 위한 소스코드 틀입니다.
@@ -13,6 +14,8 @@ public class ManagementMain {
     private static List<Student> studentStore;
     private static List<Subject> subjectStore;
     private static List<Score> scoreStore;
+
+    private static Student student;
 
 
     // index 관리 필드
@@ -225,7 +228,9 @@ public class ManagementMain {
             System.out.println("1. 수강생의 과목별 시험 회차 및 점수 등록");
             System.out.println("2. 수강생의 과목별 회차 점수 수정");
             System.out.println("3. 수강생의 특정 과목 회차별 등급 조회");
-            System.out.println("4. 메인 화면 이동");
+            System.out.println("4. 수강생 필수과목 평균등급 조회");
+            System.out.println("5. 수강생 선택과목 평균등급 조회");
+            System.out.println("6. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
 
@@ -233,7 +238,9 @@ public class ManagementMain {
                 case 1 -> createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
                 case 2 -> updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
                 case 3 -> inquiryGrade(); // 수강생의 특정 과목 회차별 등급 조회
-                case 4 -> flag = false; // 메인 화면 이동
+                case 4 -> calculateAverageMandatorySubjects(); // 평균등급 조회
+                //case 5 -> calculateChoiceAverageGrade(); // 평균등급 조회
+                case 6 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
@@ -494,15 +501,63 @@ public class ManagementMain {
     private static String getGrade(int score) {
         if (score >= 90) {
             return "A";
-        } else if (score >= 80) {
+        } else if (score >= 90) {
             return "B";
-        } else if (score >= 70) {
+        } else if (score >= 80) {
             return "C";
-        } else if (score >= 60) {
+        } else if (score >= 70) {
             return "D";
-        } else {
-            return "F"; // F랑 재시험 고민중에 F로 했습니다~
+        } else if (score >= 60) {
+            return "F";
         }
+        return "N";
     }
 
+
+    //
+    private static boolean isMandatorySubject(String subjectName) {
+        for (SubjectList subject : SubjectList.values()) {
+            if (subject.getSubjectName().equals(subjectName) && subject.getSubjectType() == SubjectType.MANDATORY) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // 필수 과목 평균 등급 조회하는 메서드
+    private static void calculateAverageMandatorySubjects() {
+        String studentId = getStudentId(); // 관리할 수강생 고유 번호
+        if ("exit".equals(studentId)) return;
+
+        System.out.println("==================================");
+        for (Student student : studentStore) {
+            if (student.getStudentId().equals(studentId)) {
+                Map<String, int[]> scoreMap = student.getStudentScoreMap();
+                ArrayList<String> subjectList = student.getStudentSubjectList();
+                int totalScore = 0; // 초기화
+                int totalMandatorySubjects = 0; // 과목수 임의
+
+                System.out.println(student.getStudentId() + " " + student.getStudentName() + "의 필수 과목 평균 등급을 계산합니다.");
+
+                // 모든 과목에 대해 점수를 확인하여 필수 과목이면 평균 계산에 포함
+                for (String subject : subjectList) {
+                    if (isMandatorySubject(subject)) {
+                        int[] scores = scoreMap.get(subject);
+                        for (int score : scores) {
+                            totalScore += score;
+                        } // 과목별 평균 구하기 -> 과목별 평균 / totalMandatorySubjects++;
+                        totalMandatorySubjects++;
+                        // 평균 등급 계산 및 출력
+                        int averageScore = totalScore / (totalMandatorySubjects);
+                        String grade = getGrade(averageScore); // 등급 반환
+                        System.out.println("필수 과목 평균 등급: " + getGrade(averageScore));
+                        return;
+                    }
+                }
+            }
+        }
+    }
 }
+
+
+                // 필수 과목이 존재하지 않을 경우 메시지 출력
