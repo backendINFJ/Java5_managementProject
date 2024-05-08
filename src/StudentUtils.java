@@ -2,28 +2,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class StudentMethod {
+public class StudentUtils {
     // 중복과 과목일치 확인을 위해 임시로 만든 리스트
-    private ArrayList<String> mandatoryTempList;
-    private ArrayList<String> choiceTempList;
 
 
-    Scanner sc = new Scanner(System.in);
+
+
+    static Scanner sc = new Scanner(System.in);
 
     // 수강생 관리 메서드 클래스
-    public Student inItMethod(String studentId) {
+    public static Student inItMethod(String studentId) {
 
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.nextLine();
-        Student student = new Student(studentId, studentName);
+        System.out.print("수강생 상태 입력: ");
+        String studentStatus = sc.nextLine();
+        Student student = new Student(studentId, studentName, studentStatus);
         return student;
     }
 
 
     //필수과목 등록 및 저장 메서드
-    public void mandatoryMethod(Student student, List<Subject> subjectStore) {
-        mandatoryTempList = new ArrayList<>();
+    public static void mandatoryMethod(Student student, List<Subject> subjectStore) {
+        ArrayList<String> mandatoryTempList = new ArrayList<>();
+
         //필수과목 리시트 보여주기
         System.out.println("========================================================================");
         for (Subject subject : subjectStore) {
@@ -89,8 +92,9 @@ public class StudentMethod {
 
 
     // 선택과목 등록 및 저장하기
-    public void choiceMethod(Student student, List<Subject> subjectStore) {
-        choiceTempList = new ArrayList<>();
+    public static void choiceMethod(Student student, List<Subject> subjectStore) {
+        ArrayList<String> choiceTempList = new ArrayList<>();
+
         //단축 리스트에 실제 저장될 getStudentSubjectList 담기
         ArrayList<String> s = student.getStudentSubjectList();
 
@@ -155,14 +159,73 @@ public class StudentMethod {
         }
     }
 
-    public void lookUp(List<Student> studentStore) {
-        System.out.println("\n수강생 목록을 조회합니다...");
-        for (Student student : studentStore) {
-            System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId());
+    public static void lookUp(List<Student> studentStore) {
+        if (studentStore.size() >= 1) {
+            System.out.println("\n수강생 목록을 조회합니다...");
+            for (Student student : studentStore) {
+                System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId()
+                                    + " ,상태: " + student.getStudentStatus()+ " ,과목: " + student.getStudentSubjectList()) ;
+            }
+            // 기능 구현
+            System.out.println("\n수강생 목록 조회 성공!");
+        } else {
+            System.out.println("조회할 학생이 없습니다.");
         }
+    }
 
-        // 기능 구현
-        System.out.println("\n수강생 목록 조회 성공!");
+    public static void StatusLookUp(List<Student> studentStore) {
+        if (studentStore.size() >= 1) {
+            System.out.println("\n 조회할 학생 상태를 입력하세요 :");
+            String studentStatus = sc.nextLine();
+            for (Student student : studentStore) {
+                if (student.getStudentStatus().equals(studentStatus)) {
+                    System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId()) ;
+                }
+            }
+        }else {
+            System.out.println("조회할 학생이 없습니다.");
+        }
+    }
 
+    public void removeStudent(List<Student> studentRemove) { // 학생 정보 삭제 메서드, code by yoonjae
+        System.out.print("삭제할 학생의 고유번호를 입력하세요: ");
+        String studentId = sc.nextLine();
+
+        for (Student student : studentRemove) {
+            if (student.getStudentId().equals(studentId)) {
+                studentRemove.remove(student);
+                System.out.println("학생 정보가 삭제되었습니다.");
+                return;
+            }
+        }
+        System.out.println("해당 학생 고유번호를 찾을 수 없습니다.");
+    }
+
+    public void editStudentName(List<Student> studentEdit) {
+        System.out.print("수정할 학생의 ID를 입력하세요: ");
+        String studentId = sc.nextLine();
+
+        for (Student student : studentEdit) {
+            if (student.getStudentId().equals(studentId)) {
+                System.out.println("학생이름: " + student.getStudentName());
+                System.out.print("수정할 학생 이름: ");
+                String studentName = sc.nextLine();
+                student.setStudentName(studentName);
+            }
+        }
+    }
+
+    public void editStudentStatus(List<Student> studentEdit) {
+        System.out.print("수정할 학생의 ID를 입력하세요: ");
+        String studentId = sc.nextLine();
+
+        for (Student student : studentEdit) {
+            if (student.getStudentId().equals(studentId)) {
+                System.out.println("학생 상태: " + student.getStudentStatus());
+                System.out.print("수정할 학생 상태: ");
+                String studentStatus = sc.nextLine();
+                student.setStudentStatus(studentStatus);
+            }
+        }
     }
 }
