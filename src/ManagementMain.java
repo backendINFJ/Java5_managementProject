@@ -179,7 +179,7 @@ public class ManagementMain {
             System.out.println("점수 관리 실행 중...");
             System.out.println("1. 수강생의 과목별 시험 회차 및 점수 등록");
             System.out.println("2. 수강생의 과목별 회차 점수 수정");
-            System.out.println("3. 수강생의 특정 과목 회차별 등급 조회");
+            System.out.println("3. 수강생의 특정 과목별 평균등급 조회");
             System.out.println("4. 수강생 필수과목 평균등급 조회");
             System.out.println("5. 수강생 선택과목 평균등급 조회");
             System.out.println("6. 메인 화면 이동");
@@ -386,16 +386,20 @@ public class ManagementMain {
 
                 System.out.println(selectSubject + "과목의 등급을 조회합니다. ");
                 int[] scores = scoreMap.get(selectSubject);
+                int totalScore = 0;
                 for (int i = 0; i < scores.length; i++) {
-                    String grade = getGrade(scores[i]); // 점수에 따른 등급 계산 메서드 호출
-                    System.out.println((i + 1) + "회차 등급: " + grade);
+                    totalScore += scores[i];
                 }
+                int averageScore = totalScore / scores.length;
+                String grade = getGrade(averageScore); // 평균 점수에 따른 등급 계산 메서드 호출
+                System.out.println("평균 등급: " + grade);
 
                 return;
             }
         }
         System.out.println("입력한 학생 번호는 잘못 입력됐거나, 존재하지 않습니다.");
     }
+
 
     private static String getGrade(int score) { // 필수과목 산정기준
         if (score >= 95) {
