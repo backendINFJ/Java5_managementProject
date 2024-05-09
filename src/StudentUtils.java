@@ -215,6 +215,7 @@ public class StudentUtils {
             String studentStatus = null;
             String StatusTemp = null;
             boolean flag = false;
+            int studentCnt = 0;
 
             while (!flag) {
                 System.out.println("\n 조회할 학생 상태를 입력하세요 :");
@@ -239,12 +240,13 @@ public class StudentUtils {
             for (Student student : studentStore) {
                 if (student.getStudentStatus().equals(studentStatus)) {
                     System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId()) ;
-                }
-                else {
-                    System.out.println("조회할 상태의 학생이 없습니다.");
-
+                    studentCnt++;
                 }
             }
+            if(studentCnt == 0) {
+                System.out.println("조회할 상태의 학생이 없습니다.");
+            }
+
         }else {
             System.out.println("조회할 학생이 없습니다.");
         }
