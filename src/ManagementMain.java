@@ -15,9 +15,6 @@ public class ManagementMain {
     private static List<Subject> subjectStore;
     private static List<Score> scoreStore;
 
-    private static Student student;
-
-
     // index 관리 필드
     private static int studentIndex;
     private static final String INDEX_TYPE_STUDENT = "ST";
@@ -28,7 +25,6 @@ public class ManagementMain {
 
     // 스캐너
     private static final Scanner sc = new Scanner(System.in);
-
 
     // 실행부분
     public static void main(String[] args) {
@@ -41,7 +37,6 @@ public class ManagementMain {
             }
         }
     }
-
 
     // 초기 데이터 생성
     private static void setInitData() {
@@ -60,7 +55,6 @@ public class ManagementMain {
         );
         scoreStore = new ArrayList<>(); // 점수 배열 초기화
     }
-
 
     // index 자동 증가
     private static String sequence(String type) {
@@ -163,22 +157,16 @@ public class ManagementMain {
         }
     }
 
-
     // 수강생 등록
     private static void createStudent() {
-
-        // 기능구현 - by 정근
         // inItMethod 로 INDEX_TYPE_STUDENT 만 넘겨주면 Student 인스턴스를 리턴받음
         Student student = StudentUtils.inItMethod(sequence(INDEX_TYPE_STUDENT));
         studentStore.add(student);
         // 기능 구현 (필수 과목, 선택 과목)
         //필수과목 입력받고 저장하기
         StudentUtils.mandatoryMethod(student, subjectStore);
-
         //선택과목 입력받고 저장하기
         StudentUtils.choiceMethod(student, subjectStore);
-
-
         // 리스트 확인
         System.out.println(student.getStudentId() + "   " + student.getStudentName()); // 수강생 인스턴스 생성확인
         ArrayList<String> studentSubjectList = student.getStudentSubjectList();
@@ -186,14 +174,10 @@ public class ManagementMain {
             System.out.println(o);
         }
         System.out.println("수강생 등록 성공!\n");
-
-
     }
-
 
     // 수강생 목록 조회
     private static void inquireStudent() {
-        StudentUtils studentUtils = new StudentUtils();
         boolean flag = true;
         while (flag) {
             System.out.println("==================================");
@@ -205,8 +189,8 @@ public class ManagementMain {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> studentUtils.lookUp(studentStore); // 수강생의 과목별 시험 회차 및 점수 등록
-                case 2 -> studentUtils.StatusLookUp(studentStore); // 수강생의 과목별 회차 점수 수정
+                case 1 -> StudentUtils.lookUp(studentStore); // 수강생의 과목별 시험 회차 및 점수 등록
+                case 2 -> StudentUtils.StatusLookUp(studentStore); // 수강생의 과목별 회차 점수 수정
                 case 3 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n전 화면 이동...");
@@ -214,10 +198,6 @@ public class ManagementMain {
                 }
             }
         }
-
-        // made by 정근
-        // 수강생 목록 불러오기
-
     }
 
     private static void displayScoreView() {
@@ -254,7 +234,6 @@ public class ManagementMain {
         return sc.next();
     }
 
-    //code by Leejinuk.
     // 수강생의 과목별 시험 회차 및 점수 등록
     private static void createScore() {
         String selectSubject;
@@ -342,14 +321,12 @@ public class ManagementMain {
                 System.out.println(selectSubject + "의 점수 수정을 원하는 회차를 입력해주세요: ");
                 int round = sc.nextInt();
                 if (1 <= round && round <= 10){
-//                    int[] scoreArray = scoreMap.get(selectSubject);
                     System.out.println(selectSubject + " 과목, " + round + " 회차의 수정할 점수를 입력해주세요: ");
                     flag = true; //반복 체크
                     do {
                         int updateScore = sc.nextInt();
                         if (0 <= updateScore && updateScore <= 100){
                             scoreMap.get(selectSubject)[round-1] = updateScore; //입력받은 회차에 -1을 해야 원하는 index에 접근가능.
-//                            scoreArray[round-1] = updateScore; //입력받은 회차에 -1을 해야 원하는 index에 접근가능.
                             flag = false;
                         } else {
                             System.out.println("0 ~ 100 사이의 점수로 입력해주세요.");
@@ -486,18 +463,6 @@ public class ManagementMain {
         System.out.println("입력한 학생 번호는 잘못 입력됐거나, 존재하지 않습니다.");
     }
 
-
-    // 점수에 따른 등급 계산 메서드
-        /* 스위치문이 더 깔끔할 거 같긴한데 저는 스위치로는 깔끔하게 안나오네요 .. 리팩토링 하z셔도 됩니다!
-    private static String getGrade(int score) {
-       char grade;
-       switch (score * 10) {
-           case 9 -> grade = 'A';
-           case 8 -> grade = 'B';
-           case 7 -> grade = 'C';
-           case 6 -> grade = 'D';
-
-       }*/
     private static String getGrade(int score) {
         if (score >= 90) {
             return "A";
@@ -513,8 +478,6 @@ public class ManagementMain {
         return "N";
     }
 
-
-    //
     private static boolean isMandatorySubject(String subjectName) {
         for (SubjectList subject : SubjectList.values()) {
             if (subject.getSubjectName().equals(subjectName) && subject.getSubjectType() == SubjectType.MANDATORY) {
@@ -557,7 +520,5 @@ public class ManagementMain {
             }
         }
     }
+
 }
-
-
-                // 필수 과목이 존재하지 않을 경우 메시지 출력

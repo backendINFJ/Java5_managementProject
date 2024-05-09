@@ -3,11 +3,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class StudentUtils {
-    // 중복과 과목일치 확인을 위해 임시로 만든 리스트
-
-
-
-
     static Scanner sc = new Scanner(System.in);
 
     // 수강생 관리 메서드 클래스
@@ -21,7 +16,6 @@ public class StudentUtils {
         Student student = new Student(studentId, studentName, studentStatus);
         return student;
     }
-
 
     //필수과목 등록 및 저장 메서드
     public static void mandatoryMethod(Student student, List<Subject> subjectStore) {
@@ -74,7 +68,6 @@ public class StudentUtils {
                 i--; // i를 하나 줄이고 다시 반복문을 실행
                 continue;
             }
-
 
             if (i >= 2 && i < mandatoryTempList.size() - 1) {
                 System.out.println("더 선택하시겠습니까?(필수과목 최대 5개 수강 가능) \n 1.네 \n 2.아니요 ");
