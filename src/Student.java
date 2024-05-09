@@ -24,7 +24,6 @@ public class Student {
     public String getStudentName() {
         return studentName;
     }
-
     // 이름 Setter
     public void setStudentName(String studentName) {
         this.studentName = studentName;
@@ -38,7 +37,6 @@ public class Student {
     public void setStudentSubjectList(ArrayList<String> studentSubjectList) {
         this.studentSubjectList = studentSubjectList;
     }
-
 
     //점수 setter
     public void setStudentScoreMap(Map<String, int[]> studentScoreMap) {
@@ -58,6 +56,5 @@ public class Student {
     public String getStudentStatus() {
         return studentStatus;
     }
+
 }
-
-

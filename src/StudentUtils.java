@@ -3,6 +3,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class StudentUtils {
+    // 중복과 과목일치 확인을 위해 임시로 만든 리스트
+
+    public enum StatusType {
+        Green,Yellow,Red
+    }
+
     static Scanner sc = new Scanner(System.in);
 
     // 수강생 관리 메서드 클래스
@@ -11,8 +17,31 @@ public class StudentUtils {
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.nextLine();
-        System.out.print("수강생 상태 입력: ");
-        String studentStatus = sc.nextLine();
+        String StatusTemp = null;
+        String studentStatus = null;
+
+        boolean flag = false;
+
+        while (!flag) {
+            System.out.print("수강생 상태 입력 (Green, Yellow, Red 중 택 1) : ");
+            StatusTemp = sc.nextLine();
+            if ("Green".equals(StatusTemp)) {
+                studentStatus = StatusType.Green.name();
+                flag = true;
+            }
+            else if ("Yellow".equals(StatusTemp)) {
+                studentStatus = StatusType.Yellow.name();
+                flag = true;
+            }
+            else if ("Red".equals(StatusTemp)) {
+                studentStatus = StatusType.Red.name();
+                flag = true;
+            }
+            else {
+                System.out.println("Green, Yellow, Red 중 하나만 입력해야합니다. ");
+            }
+        }
+
         Student student = new Student(studentId, studentName, studentStatus);
         return student;
     }
@@ -157,27 +186,14 @@ public class StudentUtils {
             System.out.println("\n수강생 목록을 조회합니다...");
             for (Student student : studentStore) {
                 System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId()
-                                    + " ,상태: " + student.getStudentStatus()+ " ,과목: " + student.getStudentSubjectList()) ;
+                        + " ,상태: " + student.getStudentStatus()+ " ,과목: " + student.getStudentSubjectList()) ;
             }
             // 기능 구현
             System.out.println("\n수강생 목록 조회 성공!");
         } else {
             System.out.println("조회할 학생이 없습니다.");
         }
-    }
 
-    public static void StatusLookUp(List<Student> studentStore) {
-        if (studentStore.size() >= 1) {
-            System.out.println("\n 조회할 학생 상태를 입력하세요 :");
-            String studentStatus = sc.nextLine();
-            for (Student student : studentStore) {
-                if (student.getStudentStatus().equals(studentStatus)) {
-                    System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId()) ;
-                }
-            }
-        }else {
-            System.out.println("조회할 학생이 없습니다.");
-        }
     }
 
     public void removeStudent(List<Student> studentRemove) { // 학생 정보 삭제 메서드, code by yoonjae
@@ -192,6 +208,46 @@ public class StudentUtils {
             }
         }
         System.out.println("해당 학생 고유번호를 찾을 수 없습니다.");
+    }
+
+    public static void StatusLookUp(List<Student> studentStore) {
+        if (studentStore.size() >= 1) {
+            String studentStatus = null;
+            String StatusTemp = null;
+            boolean flag = false;
+
+            while (!flag) {
+                System.out.println("\n 조회할 학생 상태를 입력하세요 :");
+                StatusTemp = sc.nextLine();
+                if ("Green".equals(StatusTemp)) {
+                    studentStatus = StatusType.Green.name();
+                    flag = true;
+                }
+                else if ("Yellow".equals(StatusTemp)) {
+                    studentStatus = StatusType.Yellow.name();
+                    flag = true;
+                }
+                else if ("Red".equals(StatusTemp)) {
+                    studentStatus = StatusType.Red.name();
+                    flag = true;
+                }
+                else {
+                    System.out.println("Green, Yellow, Red 중 하나만 입력해야합니다. ");
+                }
+            }
+
+            for (Student student : studentStore) {
+                if (student.getStudentStatus().equals(studentStatus)) {
+                    System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId()) ;
+                }
+                else {
+                    System.out.println("조회할 상태의 학생이 없습니다.");
+
+                }
+            }
+        }else {
+            System.out.println("조회할 학생이 없습니다.");
+        }
     }
 
     public void editStudentName(List<Student> studentEdit) {

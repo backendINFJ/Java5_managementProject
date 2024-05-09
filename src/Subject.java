@@ -1,4 +1,7 @@
+
 public class Subject {
+
+
     private String subjectId;
     private SubjectList subjectList;
     private String subjectName; // 과목명
