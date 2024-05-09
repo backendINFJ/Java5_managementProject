@@ -189,8 +189,8 @@ public class ManagementMain {
             switch (input) {
                 case 1 -> createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
                 case 2 -> updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
-                case 3 -> inquiryEpisodeGrade();
-                case 4 -> inquiryAvgGrade(); // 수강생의 특정 과목 회차별 등급 조회
+                case 3 -> inquiryEpisodeGrade(); //수강생의 특정 과목 회차별 등급 조회
+                case 4 -> inquiryAvgGrade(); // 수강생의 특정 과목별 평균등급 조회
                 case 5 -> calculateAverageMandatorySubjects(); // 평균등급 조회
                 case 6 -> flag = false; // 메인 화면 이동
                 default -> {
@@ -237,6 +237,13 @@ public class ManagementMain {
                 } while (flag);
 
                 Map<String, int[]> scoreMap = student.getStudentScoreMap();
+
+                if (scoreMap.containsKey(selectSubject)) { // 점수가 이미 등록된 경우 Execption을 배제한 간단한 예외처리
+                    System.out.println("이미 해당 과목의 점수가 등록되어 있습니다.");
+                    System.out.println("추가적인 등록은 불가능하므로 수정 메서드로 이동하겠습니다.");
+                    updateRoundScoreBySubject(); // 수정 메서드로 이동
+                    return;
+                }
                 System.out.println(selectSubject + "의 점수 등록을 시작합니다...");
                 int score;
                 int[] scoreArr = new int[10];
