@@ -215,14 +215,12 @@ public class StudentUtils {
 
     public static void StatusLookUp(List<Student> studentStore) {
         if (studentStore.size() >= 1) {
-            System.out.println("\n 조회할 학생 상태를 입력하세요 :");
-            String studentStatus = sc.nextLine();
             String studentStatus = null;
             String StatusTemp = null;
             boolean flag = false;
 
             while (!flag) {
-                System.out.print("수강생 상태 입력 (Green, Yellow, Red 중 택 1) : ");
+                System.out.println("\n 조회할 학생 상태를 입력하세요 :");
                 StatusTemp = sc.nextLine();
                 if ("Green".equals(StatusTemp)) {
                     studentStatus = StatusType.Green.name();
@@ -245,9 +243,13 @@ public class StudentUtils {
                 if (student.getStudentStatus().equals(studentStatus)) {
                     System.out.println("학생이름: " + student.getStudentName() + " ,고유번호: " + student.getStudentId()) ;
                 }
+                else {
+                    System.out.println("조회할 상태의 학생이 없습니다.");
+
+                }
             }
         }else {
-            System.out.println("조회할 상태의 학생이 없습니다.");
+            System.out.println("조회할 학생이 없습니다.");
         }
     }
 
