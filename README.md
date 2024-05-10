@@ -1,3 +1,7 @@
+프로젝트 KPT 회고
+
+https://velog.io/@clover14/240510-KPT-%ED%9A%8C%EA%B3%A0
+
 ### **기능 명세서**
 
 - 필수 요구 사항
